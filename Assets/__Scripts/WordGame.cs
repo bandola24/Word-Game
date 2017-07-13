@@ -22,6 +22,9 @@ public class WordGame : MonoBehaviour {
 	public Color bigColorDim = new Color (0.8f, 0.8f, 0.8f);
 	public Color bigColorSelected= Color.white;
 	public Vector3 bigLetterCenter = new Vector3 (0, -16, 0);
+	public List<float> scoreFontSizes = new List<float> {24, 36, 36, 1};
+	public Vector3 scoreMidPoint= new Vector3(1,1,0);
+	public float scoreComboDelay = 0.5f;
 
 	public bool ________;
 
@@ -114,7 +117,9 @@ public class WordGame : MonoBehaviour {
 				lett.c = c;
 				pos = new Vector3 (wordArea.x + left + j * letterSize, wordArea.y, 0);
 				pos.y -= (i % numRows) * letterSize;
+				lett.position = pos + Vector3.up * (20 + i % numRows);
 				lett.pos = pos;
+				lett.timeStart = Time.time + i * 0.05f;
 				go.transform.localScale = Vector3.one * letterSize;
 				wyrd.Add (lett);
 			}
@@ -135,6 +140,8 @@ public class WordGame : MonoBehaviour {
 			go.transform.localScale = Vector3.one * bigLetterSize;
 			pos = new Vector3 (0, -100, 0);
 			lett.pos = pos;
+			lett.timeStart = Time.time + currLevel.subWords.Count * 0.05f;
+			lett.easingCuve = Easing.Sin + "-0.18";
 			col = bigColorDim;
 			lett.color = col;
 			lett.visible = true;
@@ -206,7 +213,7 @@ public class WordGame : MonoBehaviour {
 					ArrangeBigLetters ();
 				}
 				if (c == '\n' || c == '\r') {
-					CheckWord ();
+					StartCoroutine(CheckWord ());
 				}
 				if (c == ' ') {
 					bigLetters = ShuffleLetters (bigLetters);
@@ -226,7 +233,7 @@ public class WordGame : MonoBehaviour {
 		return (null);
 	}
 
-	public void CheckWord() {
+	public IEnumerator CheckWord() {
 		string subWord;
 		bool foundTestWord = false;
 		List<int> containedWords = new List<int> ();
@@ -237,6 +244,7 @@ public class WordGame : MonoBehaviour {
 			subWord = currLevel.subWords [i];
 			if (string.Equals (testWord, subWord)) {
 				HighlightWyrd (i);
+				Score (wyrds [i], 1);
 				foundTestWord = true;
 			} else if (testWord.Contains (subWord)) {
 				containedWords.Add (i);
@@ -246,8 +254,10 @@ public class WordGame : MonoBehaviour {
 			int numContained = containedWords.Count;
 			int ndx;
 			for (int i = 0; i < containedWords.Count; i++) {
+				yield return(new WaitForSeconds (scoreComboDelay));
 				ndx = numContained - i - 1;
 				HighlightWyrd (containedWords [ndx]);
+				Score (wyrds [containedWords [ndx]], i + 2);
 			}
 		}
 		ClearBigLettersActive ();
@@ -267,6 +277,26 @@ public class WordGame : MonoBehaviour {
 		}
 		bigLettersActive.Clear ();
 		ArrangeBigLetters ();
+	}
+
+	void Score (Wyrd wyrd, int combo) {
+		Vector3 pt = wyrd.letters [0].transform.position;
+		List<Vector3> pts = new List<Vector3> ();
+		pt = Camera.main.WorldToViewportPoint (pt);
+		pt.z = 0;
+		pts.Add (pt);
+		pts.Add (scoreMidPoint);
+		pts.Add (Scoreboard.S.transform.position);
+		int value = wyrd.letters.Count * combo;
+		FloatingScore fs = Scoreboard.S.CreateFloatingScore (value, pts);
+		fs.timeDuration = 2f;
+		fs.fontSizes = scoreFontSizes;
+		fs.easingCurve = Easing.InOut + Easing.InOut;
+		string txt = wyrd.letters.Count.ToString ();
+		if (combo > 1) {
+			txt += " x " + combo;
+		}
+		fs.GetComponent<GUIText>().text = txt;
 	}
 
 }

@@ -8,6 +8,10 @@ public class Letter : MonoBehaviour {
 	public TextMesh tMesh;
 	public Renderer tRend;
 	public bool big=false;
+	public List<Vector3> pts = null;
+	public float timeDuration = 0.5f;
+	public float timeStart = -1;
+	public string easingCuve=Easing.InOut;
 
 	void Awake () {
 		tMesh = GetComponentInChildren<TextMesh> ();
@@ -54,17 +58,32 @@ public class Letter : MonoBehaviour {
 
 	public Vector3 pos {
 		set {
+			//transform.position = value;
+			Vector3 mid = (transform.position+value)/2f;
+			float mag = (transform.position - value).magnitude;
+			mid += Random.insideUnitSphere * mag * 0.25f;
+			pts = new List<Vector3> () { transform.position, mid, value };
+			if (timeStart == -1)
+				timeStart = Time.time;
+		}
+	}
+
+	public Vector3 position {
+		set {
 			transform.position = value;
 		}
 	}
 
-	// Use this for initialization
-	void Start () {
-		
+	void Update() {
+		if (timeStart == -1)
+			return;
+		float u = (Time.time - timeStart) / timeDuration;
+		u = Mathf.Clamp01 (u);
+		float u1 = Easing.Ease (u, easingCuve);
+		Vector3 v = Utils.Bezier (u1, pts);
+		transform.position = v;
+		if (u == 1)
+			timeStart = -1;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
 }
