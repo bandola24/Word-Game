@@ -230,6 +230,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0f3fc0fb1ac42f4eb2bbf000ede7b37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefabLetter: {fileID: 1356357014909952, guid: 3dafc339e903b734d85bc64b3475c88c,
+    type: 2}
+  wordArea:
+    serializedVersion: 2
+    x: -24
+    y: 19
+    width: 48
+    height: 28
+  letterSize: 1.5
+  showAllWyrds: 1
+  bigLetterSize: 4
+  bigColorDim: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  bigColorSelected: {r: 1, g: 1, b: 1, a: 1}
+  bigLetterCenter: {x: 0, y: -16, z: 0}
   ________: 0
   mode: 0
   currLevel:
@@ -237,3 +251,5 @@ MonoBehaviour:
     longWordIndex: 0
     word: 
     subWords: []
+  bigLetters: []
+  bigLettersActive: []
