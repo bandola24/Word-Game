@@ -239,7 +239,7 @@ MonoBehaviour:
     width: 48
     height: 28
   letterSize: 1.5
-  showAllWyrds: 1
+  showAllWyrds: 0
   bigLetterSize: 4
   bigColorDim: {r: 0.8, g: 0.8, b: 0.8, a: 1}
   bigColorSelected: {r: 1, g: 1, b: 1, a: 1}
@@ -253,3 +253,4 @@ MonoBehaviour:
     subWords: []
   bigLetters: []
   bigLettersActive: []
+  testWord: 
