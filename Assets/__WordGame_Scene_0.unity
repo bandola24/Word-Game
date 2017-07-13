@@ -120,6 +120,8 @@ GameObject:
   - component: {fileID: 345694713}
   - component: {fileID: 345694712}
   - component: {fileID: 345694711}
+  - component: {fileID: 345694710}
+  - component: {fileID: 345694716}
   m_Layer: 0
   m_Name: _MainCamera
   m_TagString: MainCamera
@@ -127,6 +129,26 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &345694710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 345694709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46210c690f858b7458bda6d9dbf698bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wordListText: {fileID: 4900000, guid: 22e5a51e6732c452fab90efed574a934, type: 3}
+  numToParseBeforeYield: 10000
+  wordLengthMin: 3
+  wordLengthMax: 7
+  _________: 0
+  currLine: 0
+  totalLines: 0
+  longWordCount: 0
+  wordCount: 0
 --- !u!81 &345694711
 AudioListener:
   m_ObjectHideFlags: 0
@@ -197,3 +219,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &345694716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 345694709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0f3fc0fb1ac42f4eb2bbf000ede7b37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ________: 0
+  mode: 0
+  currLevel:
+    levelNum: 0
+    longWordIndex: 0
+    word: 
+    subWords: []

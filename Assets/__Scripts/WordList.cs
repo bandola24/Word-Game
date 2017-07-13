@@ -25,7 +25,7 @@ public class WordList : MonoBehaviour {
 	}
 
 	// Use this for initialization
-	void Start () {
+	public void Init () {
 		lines = wordListText.text.Split ('\n');
 		totalLines = lines.Length;
 		StartCoroutine (ParseLines ());
@@ -49,6 +49,7 @@ public class WordList : MonoBehaviour {
 				yield return null;
 			}
 		}
+		gameObject.SendMessage ("WordListParseComplete");
 	}
 
 	public List<string> GetWords(){
