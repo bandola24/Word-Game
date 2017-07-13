@@ -25,6 +25,7 @@ public class WordGame : MonoBehaviour {
 	public List<float> scoreFontSizes = new List<float> {24, 36, 36, 1};
 	public Vector3 scoreMidPoint= new Vector3(1,1,0);
 	public float scoreComboDelay = 0.5f;
+	public Color[] wyrdPalette;
 
 	public bool ________;
 
@@ -125,6 +126,7 @@ public class WordGame : MonoBehaviour {
 			}
 			if (showAllWyrds)
 				wyrd.visible = true;
+			wyrd.color = wyrdPalette [word.Length - WordList.S.wordLengthMin];
 			wyrds.Add (wyrd);
 			if (i % numRows == numRows - 1) {
 				left += (columnWidth + 0.5f) * letterSize;
